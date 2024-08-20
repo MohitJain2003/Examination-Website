@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="results-container">
+        <h2>Test Completed</h2>
+        <p id="score">Your score: 0/10</p>
+        <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const correctAnswers = {
+                q1: 'B',
+                q2: 'A',
+                q3: 'D',
+                q4: 'C',
+                q5: 'B',
+                q6: 'A',
+                q7: 'D',
+                q8: 'C',
+                q9: 'B',
+                q10: 'B'
+            };
+
+            // Retrieve stored answers from localStorage
+            let answers = JSON.parse(localStorage.getItem('answers') || '{}');
+            let score = 0;
+
+            // Calculate the score by comparing stored answers with correct answers
+            for (let key in correctAnswers) {
+                if (correctAnswers.hasOwnProperty(key) && answers[key] === correctAnswers[key]) {
+                    score++;
+                }
+            }
+
+            // Display the calculated score
+            document.getElementById('score').textContent = `Your score: ${score}/10`;
+
+            // Clear the answers from localStorage after displaying the score
+            localStorage.removeItem('answers');
+        });
+    </script>
+</body>
+</html>

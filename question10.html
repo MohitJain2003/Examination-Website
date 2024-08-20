@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 10</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="question-container">
+        <h2>Question 10: What is the hardest natural substance on Earth?</h2>
+        <form id="questionForm10">
+            <input type="radio" name="answer" value="A" required> A) Gold<br>
+            <input type="radio" name="answer" value="B"> B) Diamond<br>
+            <input type="radio" name="answer" value="C"> C) Quartz<br>
+            <input type="radio" name="answer" value="D"> D) Graphite<br><br>
+            <button type="submit">Submit Test</button>
+        </form>
+    </div>
+    <div id="timer"></div>
+
+    <script>
+        function startTimer() {
+            const endTime = parseInt(localStorage.getItem('endTime'), 10);
+            const timerElement = document.getElementById('timer');
+
+            function updateTimer() {
+                const now = Date.now();
+                const timeLeft = endTime - now;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    window.location.href = "results.html";
+                } else {
+                    const minutes = Math.floor(timeLeft / 1000 / 60);
+                    const seconds = Math.floor((timeLeft / 1000) % 60);
+                    timerElement.textContent = `Time left: ${minutes}m ${seconds}s`;
+                }
+            }
+
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        startTimer();
+
+        document.getElementById('questionForm10').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            let answers = JSON.parse(localStorage.getItem('answers') || '{}');
+            answers.q10 = selectedAnswer;
+            localStorage.setItem('answers', JSON.stringify(answers));
+
+            window.location.href = "results.html";
+        });
+    </script>
+</body>
+</html>

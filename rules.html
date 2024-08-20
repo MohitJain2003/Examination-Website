@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="rules-container">
+        <h2>Exam Rules and Guidelines</h2>
+        <ul>
+            <li>Read each question carefully.</li>
+            <li>Select the correct answer from the options provided.</li>
+            <li>Once an answer is selected and submitted, you cannot go back to that question.</li>
+            <li>The test is time-bound. Make sure to manage your time effectively.</li>
+            <li>Do not refresh the page or you may lose your progress.</li>
+        </ul>
+       
+        <button id="nextButton" disabled>Next</button>
+        <p id="timer">20 seconds remaining</p>
+    </div>
+
+    <script>
+        let timeLeft = 20;
+        const timerElement = document.getElementById('timer');
+        const nextButton = document.getElementById('nextButton');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = `${timeLeft} seconds remaining`;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "You can now proceed to the questions.";
+                nextButton.disabled = false;
+            }
+        }, 1000);
+
+        nextButton.addEventListener('click', function() {
+           
+            const testDuration = 2 * 60 * 1000; // 2 minutes in milliseconds
+            const endTime = Date.now() + testDuration;
+            localStorage.setItem('endTime', endTime);
+            window.location.href = "question1.html";
+        });
+    </script>
+</body>
+</html>

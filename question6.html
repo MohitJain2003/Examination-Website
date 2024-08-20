@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 6</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="question-container">
+        <h2>Question 6: Who developed the theory of relativity?</h2>
+        <form id="questionForm6">
+            <input type="radio" name="answer" value="A" required> A) Isaac Newton<br>
+            <input type="radio" name="answer" value="B"> B) Albert Einstein<br>
+            <input type="radio" name="answer" value="C"> C) Nikola Tesla<br>
+            <input type="radio" name="answer" value="D"> D) Galileo Galilei<br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="timer"></div>
+
+    <script>
+        function startTimer() {
+            const endTime = parseInt(localStorage.getItem('endTime'), 10);
+            const timerElement = document.getElementById('timer');
+
+            function updateTimer() {
+                const now = Date.now();
+                const timeLeft = endTime - now;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    window.location.href = "results.html";
+                } else {
+                    const minutes = Math.floor(timeLeft / 1000 / 60);
+                    const seconds = Math.floor((timeLeft / 1000) % 60);
+                    timerElement.textContent = `Time left: ${minutes}m ${seconds}s`;
+                }
+            }
+
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        startTimer();
+
+        document.getElementById('questionForm6').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            let answers = JSON.parse(localStorage.getItem('answers') || '{}');
+            answers.q6 = selectedAnswer;
+            localStorage.setItem('answers', JSON.stringify(answers));
+
+            window.location.href = "question7.html";
+        });
+    </script>
+</body>
+</html>
